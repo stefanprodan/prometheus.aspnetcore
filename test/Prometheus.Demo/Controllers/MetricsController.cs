@@ -17,7 +17,7 @@ namespace Prometheus.Demo.Controllers
 
         }
 
-        public bool Index()
+        public void Index()
         {
             var response = HttpContext.Response;
             var request = HttpContext.Request;
@@ -32,8 +32,6 @@ namespace Prometheus.Demo.Controllers
                 var collected = DefaultCollectorRegistry.Instance.CollectAll();
                 ScrapeHandler.ProcessScrapeRequest(collected, contentType, outputStream);
             };
-
-            return true;
         }
     }
 }

@@ -6,12 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Prometheus.Demo.Controllers
 {
-    [ServiceFilter(typeof(PrometheusHttpFilter))]
+    //[ServiceFilter(typeof(PrometheusHttpFilter))]
     public class HomeController : Controller
     {
         public string Index()
         {
             return $"Running on {Environment.MachineName}";
+        }
+
+        public string Error()
+        {
+            throw new Exception("Test");
         }
     }
 }
