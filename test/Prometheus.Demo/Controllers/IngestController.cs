@@ -30,7 +30,7 @@ namespace Prometheus.Demo.Controllers
             {
                 dynamic log = JsonConvert.DeserializeObject<dynamic>(payload.Log);
 
-                _logger.LogInformation(payload.Log);
+                //_logger.LogInformation(payload.Log);
             }
 
             return new EmptyResult();
