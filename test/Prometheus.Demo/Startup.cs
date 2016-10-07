@@ -30,6 +30,7 @@ namespace Prometheus.Demo
         {
             // Add framework services.
             services.AddMvc();
+            services.AddScoped<PrometheusHttpFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +51,7 @@ namespace Prometheus.Demo
             });
 
 
-            Advanced.DefaultCollectorRegistry.Instance.RegisterOnDemandCollectors(new[] { new Advanced.DotNetStatsCollector() });
+            //Advanced.DefaultCollectorRegistry.Instance.RegisterOnDemandCollectors(new[] { new Advanced.DotNetStatsCollector() });
         }
     }
 }

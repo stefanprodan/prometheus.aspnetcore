@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Prometheus.Demo.Controllers
 {
+    [ServiceFilter(typeof(PrometheusHttpFilter))]
     public class IngestController : Controller
     {
         private ILogger _logger;
@@ -25,9 +26,12 @@ namespace Prometheus.Demo.Controllers
         [HttpPost]
         public IActionResult Event([FromBody]Payload payload)
         {
-            dynamic log = JsonConvert.DeserializeObject<dynamic>(payload.Log);
+            if (payload != null && !string.IsNullOrEmpty(payload.Log) && payload.Log.Contains("IP"))
+            {
+                dynamic log = JsonConvert.DeserializeObject<dynamic>(payload.Log);
 
-            _logger.LogInformation((string)log.IP);
+                _logger.LogInformation((string)log.IP);
+            }
 
             return new EmptyResult();
         }

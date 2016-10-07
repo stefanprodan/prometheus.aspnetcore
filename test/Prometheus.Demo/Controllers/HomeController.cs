@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Prometheus.Demo.Controllers
 {
+    [ServiceFilter(typeof(PrometheusHttpFilter))]
     public class HomeController : Controller
     {
         public string Index()
