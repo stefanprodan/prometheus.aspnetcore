@@ -13,8 +13,12 @@ namespace Prometheus.Demo
 {
     public class Startup
     {
+        private IHostingEnvironment _env;
+
         public Startup(IHostingEnvironment env)
         {
+            _env = env;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -31,6 +35,12 @@ namespace Prometheus.Demo
             // Add framework services.
             services.AddMvc();
             services.AddScoped<PrometheusHttpFilter>();
+
+            var proxyFor = Environment.GetEnvironmentVariable("PROXY_FOR");
+            services.Configure<Settings>(s =>
+            {
+                s.ProxyFor = proxyFor;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
