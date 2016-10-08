@@ -1,10 +1,13 @@
-﻿$ErrorActionPreference = "Stop"
-
-# build image
+﻿# build image
 docker pull microsoft/dotnet:latest
-docker build -t prom-demo .
+docker build -t eventlog .
 
-# run container
-docker run --name prom-demo -d -p 5100:5000 -t prom-demo
+# create network
+$network = "intranet"
+if(!(docker network ls --filter name=$network -q)){
+	docker network create $network
+}
 
-#   docker run -d --network dockerprom_monitor-net --network intranet -p 5100:5000 --name eventlog --restart unless-stopped eventlog
+# run containers
+docker run -d --network intranet -p 5200:5000 --name eventlog --restart unless-stopped eventlog
+docker run -d --network intranet -p 5100:5000 --name eventlog-proxy --restart unless-stopped -e PROXY_FOR='http://eventlog:5200' eventlog

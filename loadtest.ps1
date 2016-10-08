@@ -18,4 +18,4 @@
 }
 
 # run load test
-loadtest -Iterations 100000 -Url 'http://188.241.146.52:5100/ingest/event'
+loadtest -Iterations 100000 -Url 'http://localhost:5100/ingest/event'

@@ -1,4 +1,3 @@
-﻿$ErrorActionPreference = "Stop"
-
-docker rm -f prom-demo
-docker rmi prom-demo
+﻿docker rm -f eventlog-proxy
+docker rm -f eventlog
+docker rmi eventlog
