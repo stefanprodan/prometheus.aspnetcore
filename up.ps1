@@ -10,4 +10,4 @@ if(!(docker network ls --filter name=$network -q)){
 
 # run containers
 docker run -d --network intranet -p 5200:5000 --name eventlog --restart unless-stopped eventlog
-docker run -d --network intranet -p 5100:5000 --name eventlog-proxy --restart unless-stopped -e PROXY_FOR='http://eventlog:5200' eventlog
+docker run -d --network intranet -p 5100:5000 --name eventlog-proxy --restart unless-stopped -e PROXY_FOR='http://eventlog:5000' eventlog
