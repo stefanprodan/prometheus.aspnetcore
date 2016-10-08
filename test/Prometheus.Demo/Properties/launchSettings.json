@@ -12,7 +12,6 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "PROXY_FOR": "http://localhost:34993/",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },

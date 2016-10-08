@@ -30,7 +30,7 @@ namespace Prometheus.Demo
             {
                 await _next.Invoke(httpContext);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 statusCode = 500;
                 counter.Labels(path, method, statusCode.ToString()).Inc();
