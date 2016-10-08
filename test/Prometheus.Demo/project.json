@@ -42,7 +42,7 @@
 
   "runtimeOptions": {
     "configProperties": {
-      "System.GC.Server": true
+      "System.GC.Server": false
     }
   },
 

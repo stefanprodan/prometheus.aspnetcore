@@ -2,7 +2,7 @@ FROM microsoft/dotnet:latest
 
 # Set environment variables
 ENV ASPNETCORE_URLS="http://*:5000"
-ENV ASPNETCORE_ENVIRONMENT="Debug"
+ENV ASPNETCORE_ENVIRONMENT="Production"
 
 # Copy files to app directory
 COPY /src/Prometheus.AspNetCore /app/src/Prometheus.AspNetCore
