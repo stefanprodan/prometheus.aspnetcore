@@ -37,14 +37,24 @@ namespace Prometheus.Demo
             services.AddScoped<PrometheusHttpFilter>();
 
             var proxyFor = Environment.GetEnvironmentVariable("PROXY_FOR");
+            var pingInterval = Environment.GetEnvironmentVariable("PING_INTERVAL");
+            var pingTargets = Environment.GetEnvironmentVariable("PING_TARGETS");
+
             services.Configure<Settings>(s =>
             {
                 s.ProxyFor = proxyFor;
+                s.PingInterval = pingInterval;
+                if (!string.IsNullOrEmpty(pingTargets))
+                {
+                    s.PingTargets = pingTargets.Split(',').ToList();
+                }
             });
+
+            services.AddSingleton<PingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, PingService pingService)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -62,6 +72,7 @@ namespace Prometheus.Demo
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            pingService.Start();
 
             //Advanced.DefaultCollectorRegistry.Instance.RegisterOnDemandCollectors(new[] { new Advanced.DotNetStatsCollector() });
         }

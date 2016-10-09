@@ -17,5 +17,10 @@ namespace Prometheus.Demo.Controllers
         {
             throw new Exception("Test");
         }
+
+        public string Ping()
+        {
+            return "Pong";
+        }
     }
 }
