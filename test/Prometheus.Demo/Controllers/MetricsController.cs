@@ -9,14 +9,6 @@ namespace Prometheus.Demo.Controllers
 {
     public class MetricsController : Controller
     {
-        public MetricsController()
-        {
-            //var counter = Metrics.CreateCounter("myCounter", "help text", labelNames: new[] { "method", "endpoint" });
-            //counter.Labels("GET", "/").Inc();
-            //counter.Labels("POST", "/cancel").Inc();
-
-        }
-
         public void Index()
         {
             var response = HttpContext.Response;

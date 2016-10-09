@@ -11,7 +11,6 @@ using System.Text;
 
 namespace Prometheus.Demo.Controllers
 {
-    //[ServiceFilter(typeof(PrometheusHttpFilter))]
     public class IngestController : Controller
     {
         private ILogger _logger;
