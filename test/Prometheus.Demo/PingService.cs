@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace Prometheus.Demo
         private readonly Counter _counter;
         private Task pingTask;
 
-        public PingService(Settings settings, ILogger<PingService> logger)
+        public PingService(IOptions<Settings> settings, ILogger<PingService> logger)
         {
-            _settings = settings;
+            _settings = settings.Value;
             _logger = logger;
             _counter = Metrics.CreateCounter("dotnet_ping_requests_total", "Ping Requests Total", labelNames: new[] { "target", "status" });
         }
