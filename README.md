@@ -61,7 +61,7 @@ Ping metrics:
 ```
 # HELP dotnet_ping_requests_total Ping Requests Total
 # TYPE dotnet_ping_requests_total COUNTER
-dotnet_ping_requests_total{target="http://eventlog:5000",status="200"} 1467989
-dotnet_ping_requests_total{target="http://eventlog-proxy:5000",status="500"} 57
-dotnet_ping_requests_total{target="http://eventlog-proxy:5000",status="200"} 1467932
+dotnet_ping_requests_total{target="http://app:5000",status="200"} 1467989
+dotnet_ping_requests_total{target="http://app-proxy:5000",status="500"} 57
+dotnet_ping_requests_total{target="http://app-proxy:5000",status="200"} 1467932
 ```
