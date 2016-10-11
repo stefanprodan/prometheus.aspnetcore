@@ -23,5 +23,13 @@ docker run -d --network promapp-net -p 5300:5000 --name app-ping --restart unles
 Load test:
 
 ```
- ab -k -l -p log.json -T application/json -c 50 -n 10000 http://<HOST-IP>:5100/ingest/event
+ ab -k -l -p payload.json -T application/json -c 50 -n 10000 http://<HOST-IP>:5100/ingest/event
 ```
+
+payload.json
+
+```json
+{
+	Log: "{Data:'mock data'}"
+}
+``
