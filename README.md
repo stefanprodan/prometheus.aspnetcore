@@ -1,4 +1,4 @@
-# prometheus.netcore
+# Monitoring ASP.NET Core apps with Prometheus
 
 Services:
 
