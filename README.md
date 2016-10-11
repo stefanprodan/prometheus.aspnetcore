@@ -42,3 +42,26 @@ Prometheus targets:
     static_configs:
       - targets: ['app:5000', 'app-proxy:5000', 'app-ping:5000']
 ```
+
+Proxy metrics:
+
+```
+# HELP dotnet_http_requests_total HTTP Requests Total
+# TYPE dotnet_http_requests_total COUNTER
+dotnet_http_requests_total{path="/ingest/eventlog",method="POST",status="200"} 347000
+dotnet_http_requests_total{path="/Home/Ping",method="GET",status="200"} 487393
+dotnet_http_requests_total{path="/favicon.ico",method="GET",status="404"} 1
+dotnet_http_requests_total{path="/",method="GET",status="200"} 2
+dotnet_http_requests_total{path="/home/ping",method="GET",status="200"} 10000
+dotnet_http_requests_total{path="/ingest/event",method="POST",status="200"} 226798
+```
+
+Ping metrics:
+
+```
+# HELP dotnet_ping_requests_total Ping Requests Total
+# TYPE dotnet_ping_requests_total COUNTER
+dotnet_ping_requests_total{target="http://eventlog:5000",status="200"} 1467989
+dotnet_ping_requests_total{target="http://eventlog-proxy:5000",status="500"} 57
+dotnet_ping_requests_total{target="http://eventlog-proxy:5000",status="200"} 1467932
+```
