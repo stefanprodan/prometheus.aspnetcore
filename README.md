@@ -33,3 +33,12 @@ payload.json
 	"Log": "{Data:'mock data'}"
 }
 ```
+
+Prometheus targets:
+
+```yaml
+  - job_name: 'aspnetcore'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['app:5000', 'app-proxy:5000', 'app-ping:5000']
+```
