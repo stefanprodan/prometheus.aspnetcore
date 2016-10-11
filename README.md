@@ -30,6 +30,6 @@ payload.json
 
 ```json
 {
-	Log: "{Data:'mock data'}"
+	"Log": "{Data:'mock data'}"
 }
 ``
