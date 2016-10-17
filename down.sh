@@ -1,4 +1,8 @@
-﻿docker rm -f eventlog-ping
-docker rm -f eventlog-proxy
-docker rm -f eventlog
-docker rmi eventlog
+﻿#!/bin/bash
+set -e
+
+image="eventlog"
+
+docker rm -f $(docker ps -a -q -f "ancestor=$image")
+
+docker rmi -f $image
