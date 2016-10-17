@@ -29,7 +29,7 @@ namespace Prometheus.Demo.Controllers
         [HttpPost]
         public IActionResult Event([FromBody]Payload payload)
         {
-            var data = JsonConvert.DeserializeObject<dynamic>(payload.Data);
+            //var data = JsonConvert.DeserializeObject<dynamic>(payload.Data);
 
             if (!string.IsNullOrEmpty(_settings.ProxyFor))
             {
@@ -37,7 +37,7 @@ namespace Prometheus.Demo.Controllers
                 {
                     client.BaseAddress = new Uri(_settings.ProxyFor);
                     var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-                    var result = client.PostAsync("Ingest/EventLog", content).Result;
+                    var result = client.PostAsync("ingest/data", content).Result;
                     result.RequestMessage.Dispose();
                     result.Dispose();
                 }
@@ -47,7 +47,7 @@ namespace Prometheus.Demo.Controllers
         }
 
         [HttpPost]
-        public IActionResult EventLog([FromBody]Payload payload)
+        public IActionResult Data([FromBody]Payload payload)
         {
             dynamic data = JsonConvert.DeserializeObject<dynamic>(payload.Data);
 
