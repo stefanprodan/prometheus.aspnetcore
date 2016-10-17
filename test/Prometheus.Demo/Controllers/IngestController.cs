@@ -29,23 +29,17 @@ namespace Prometheus.Demo.Controllers
         [HttpPost]
         public IActionResult Event([FromBody]Payload payload)
         {
-            if (payload != null && !string.IsNullOrEmpty(payload.Log))
+            var data = JsonConvert.DeserializeObject<dynamic>(payload.Data);
+
+            if (!string.IsNullOrEmpty(_settings.ProxyFor))
             {
-                dynamic log = JsonConvert.DeserializeObject<dynamic>(payload.Log);
-
-                if(!string.IsNullOrEmpty(_settings.ProxyFor))
+                using (var client = new HttpClient())
                 {
-                    // Disposing the HttpClient had no effect on the API receiving a ECONNECT error
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(_settings.ProxyFor);
-                        var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-                        var result = client.PostAsync("Ingest/EventLog", content).Result;
-
-                        // possible fix 
-                        result.RequestMessage.Dispose();
-                        result.Dispose();
-                    }
+                    client.BaseAddress = new Uri(_settings.ProxyFor);
+                    var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+                    var result = client.PostAsync("Ingest/EventLog", content).Result;
+                    result.RequestMessage.Dispose();
+                    result.Dispose();
                 }
             }
 
@@ -55,10 +49,7 @@ namespace Prometheus.Demo.Controllers
         [HttpPost]
         public IActionResult EventLog([FromBody]Payload payload)
         {
-            if (payload != null && !string.IsNullOrEmpty(payload.Log))
-            {
-                dynamic log = JsonConvert.DeserializeObject<dynamic>(payload.Log);
-            }
+            dynamic data = JsonConvert.DeserializeObject<dynamic>(payload.Data);
 
             return new EmptyResult();
         }
@@ -66,6 +57,6 @@ namespace Prometheus.Demo.Controllers
 
     public class Payload
     {
-        public string Log { get; set; }
+        public string Data { get; set; }
     }
 }
