@@ -29,20 +29,22 @@ namespace Prometheus.Demo.Controllers
         [HttpPost]
         public IActionResult Event([FromBody]Payload payload)
         {
-            //var data = JsonConvert.DeserializeObject<dynamic>(payload.Data);
-
-            if (!string.IsNullOrEmpty(_settings.ProxyFor))
+            if (!string.IsNullOrEmpty(payload.Data))
             {
-                using (var client = new HttpClient())
+                var data = JsonConvert.DeserializeObject<dynamic>(payload.Data);
+
+                if (!string.IsNullOrEmpty(_settings.ProxyFor))
                 {
-                    client.BaseAddress = new Uri(_settings.ProxyFor);
-                    var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-                    var result = client.PostAsync("ingest/data", content).Result;
-                    result.RequestMessage.Dispose();
-                    result.Dispose();
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(_settings.ProxyFor);
+                        var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+                        var result = client.PostAsync("ingest/data", content).Result;
+                        result.RequestMessage.Dispose();
+                        result.Dispose();
+                    }
                 }
             }
-
             return new EmptyResult();
         }
 
