@@ -35,10 +35,17 @@ namespace Prometheus.Demo.Controllers
 
                 if(!string.IsNullOrEmpty(_settings.ProxyFor))
                 {
-                    var client = new HttpClient();
-                    client.BaseAddress = new Uri(_settings.ProxyFor);
-                    var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-                    var result = client.PostAsync("Ingest/EventLog", content).Result;
+                    // Disposing the HttpClient had no effect on the API receiving a ECONNECT error
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(_settings.ProxyFor);
+                        var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+                        var result = client.PostAsync("Ingest/EventLog", content).Result;
+
+                        // possible fix 
+                        result.RequestMessage.Dispose();
+                        result.Dispose();
+                    }
                 }
             }
 
