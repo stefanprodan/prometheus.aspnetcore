@@ -39,9 +39,9 @@ namespace Prometheus.Demo.Controllers
                 {
                     //using (var client = new HttpClient())
                     //{
-                        client.BaseAddress = new Uri(_settings.ProxyFor);
+                        //client.BaseAddress = new Uri(_settings.ProxyFor);
                         var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-                        var result = client.PostAsync("ingest/data", content).Result;
+                        var result = client.PostAsync(_settings.ProxyFor+"/ingest/data", content).Result;
                         result.RequestMessage.Dispose();
                         result.Dispose();
                     //}
