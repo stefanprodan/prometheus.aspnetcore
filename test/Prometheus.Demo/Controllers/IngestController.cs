@@ -29,7 +29,7 @@ namespace Prometheus.Demo.Controllers
         private static HttpClient client = new HttpClient();
 
         [HttpPost]
-        public IActionResult Event([FromBody]Payload payload)
+        public async Task<IActionResult> Event([FromBody]Payload payload)
         {
             if (!string.IsNullOrEmpty(payload.Data))
             {
@@ -41,7 +41,7 @@ namespace Prometheus.Demo.Controllers
                     //{
                         //client.BaseAddress = new Uri(_settings.ProxyFor);
                         var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-                        var result = client.PostAsync(_settings.ProxyFor+"/ingest/data", content).Result;
+                        var result = await client.PostAsync(_settings.ProxyFor+"/ingest/data", content);
                         result.RequestMessage.Dispose();
                         result.Dispose();
                     //}
