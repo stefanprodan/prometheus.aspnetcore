@@ -26,6 +26,8 @@ namespace Prometheus.Demo.Controllers
             return $"Running on {Environment.MachineName}";
         }
 
+        private static HttpClient client = new HttpClient();
+
         [HttpPost]
         public IActionResult Event([FromBody]Payload payload)
         {
@@ -35,14 +37,14 @@ namespace Prometheus.Demo.Controllers
 
                 if (!string.IsNullOrEmpty(_settings.ProxyFor))
                 {
-                    using (var client = new HttpClient())
-                    {
+                    //using (var client = new HttpClient())
+                    //{
                         client.BaseAddress = new Uri(_settings.ProxyFor);
                         var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
                         var result = client.PostAsync("ingest/data", content).Result;
                         result.RequestMessage.Dispose();
                         result.Dispose();
-                    }
+                    //}
                 }
             }
             return new EmptyResult();
