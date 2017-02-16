@@ -61,6 +61,8 @@ namespace Prometheus.Demo
 
             //app.UseDeveloperExceptionPage();
 
+            app.UseInjestEventsMiddleware();
+
             app.UsePrometheusMiddleware();
 
             app.UseStaticFiles();
